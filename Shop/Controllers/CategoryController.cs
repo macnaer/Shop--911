@@ -30,9 +30,12 @@ namespace Shop.Controllers
         }
 
         // POST
-        //public IActionResult Create(obj)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public IActionResult Create(Category category)
+        {
+            _db.Category.Add(category);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
