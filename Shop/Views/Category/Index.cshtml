@@ -28,6 +28,12 @@
                     <tr>
                         <td width="50%">@item.Name</td>
                         <td width="30%">@item.ShowOrder</td>
+                        <td class="text-center">
+                            <div class="w-75 btn-group">
+                                <a class="btn btn-warning mx-2" asp-route-Id="@item.Id" asp-controller="Category" asp-action="Edit">Edit</a>
+                                <a class="btn btn-danger mx-2" asp-route-Id="@item.Id" asp-controller="Category" asp-action="Delete">Delete</a>
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
