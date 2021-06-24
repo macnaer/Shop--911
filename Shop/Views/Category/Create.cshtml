@@ -1,6 +1,7 @@
 ﻿@model Shop.Models.Category
 
 <form method="post" asp-action="Create" asp-controller="Category">
+    <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
     <div class="border p-3">
         <div class="form-group row">
             <h2 class="text-info pl-3">Add Category</h2>
@@ -13,6 +14,7 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="Name" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Name"></span>
                     </div>
 
                 </div>
@@ -22,6 +24,7 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="ShowOrder" class="form-control" />
+                        <span class="text-danger" asp-validation-for="ShowOrder"></span>
                     </div>
 
                 </div>
@@ -42,5 +45,8 @@
             </div>
         </div>
     </div>
-
 </form>
+
+@section Scripts{ 
+    @{ <partial name="_ValidationScriptsPartial" /> }
+}
