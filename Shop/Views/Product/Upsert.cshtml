@@ -48,7 +48,7 @@
                         <label asp-for="Product.Description"></label>
                     </div>
                     <div class="col-8">
-                        <input class="form-control" asp-for="Product.Description" />
+                        <textarea class="form-control" id="summernote" asp-for="Product.Description"></textarea>
                         <span class="text-danger" asp-validation-for="Product.Description"></span>
                     </div>
                 </div>
@@ -94,4 +94,13 @@
 
 @section Scripts{ 
     @{ <partial name="_ValidationScriptsPartial" /> }
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            tabsize: 2,
+            height: 300,
+        });
+    });
+</script>
 }

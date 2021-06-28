@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -6,6 +7,7 @@ using Shop.Models;
 using Shop.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +17,12 @@ namespace Shop.Controllers
     {
 
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ApplicationDbContext db)
+        public ProductController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -57,16 +61,60 @@ namespace Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Product product)
+        public IActionResult Upsert(ProductVM productVM)
         {
+            
             if (ModelState.IsValid)
             {
-                _db.Product.Add(product);
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                if(productVM.Product.Id == 0)
+                {
+                    string upload = webRootPath + ENV.ImagePath;
+                    string filename = Guid.NewGuid().ToString();
+                    string extentions = Path.GetExtension(files[0].FileName);
+
+                    using (var fileStream = new FileStream(Path.Combine(upload, filename + extentions), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    productVM.Product.Image = filename + extentions;
+                    _db.Product.Add(productVM.Product);
+
+                }
+                else
+                {
+                    var formObject = _db.Product.FirstOrDefault(u => u.Id == productVM.Product.Id);
+                    if(files.Count() > 0)
+                    {
+                        string upload = webRootPath + ENV.ImagePath;
+                        string filename = Guid.NewGuid().ToString();
+                        string extentions = Path.GetExtension(files[0].FileName);
+
+                        var oldFile = Path.Combine(upload, formObject.Image);
+                        if (System.IO.File.Exists(oldFile))
+                        {
+                            System.IO.File.Delete(oldFile);
+                        }
+                        using (var fileStream = new FileStream(Path.Combine(upload, filename + extentions), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                        productVM.Product.Image = filename + extentions;
+                    }
+                    else
+                    {
+                        productVM.Product.Image = formObject.Image;
+                    }
+                    _db.Product.Update(productVM.Product);
+                }
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return View(productVM);
         }
     }
 }
