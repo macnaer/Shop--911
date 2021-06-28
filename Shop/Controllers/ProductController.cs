@@ -86,7 +86,7 @@ namespace Shop.Controllers
                 }
                 else
                 {
-                    var formObject = _db.Product.FirstOrDefault(u => u.Id == productVM.Product.Id);
+                    var formObject = _db.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
                     if(files.Count() > 0)
                     {
                         string upload = webRootPath + ENV.ImagePath;
@@ -113,6 +113,11 @@ namespace Shop.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            productVM.CategorySelectList = _db.Category.Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
 
             return View(productVM);
         }
