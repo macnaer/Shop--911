@@ -7,7 +7,7 @@ namespace Shop.Models.ViewModels
 {
     public class HomeVM
     {
-        public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Product> Product { get; set; }
         public IEnumerable<Category> Categories { get; set; }
     }
 }

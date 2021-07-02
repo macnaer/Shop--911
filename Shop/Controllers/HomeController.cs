@@ -27,12 +27,22 @@ namespace Shop.Controllers
         {
             HomeVM homeVM = new HomeVM()
             {
-                Products = _db.Product.Include(u  => u.Category),
+                Product = _db.Product.Include(u  => u.Category),
                 Categories = _db.Category
 
             };
 
             return View(homeVM);
+        }
+
+        public IActionResult Details(int id)
+        {
+            DetailsVM detailsVM = new DetailsVM()
+            {
+                Product = _db.Product.Include(u => u.Category).Where(u => u.Id == id).FirstOrDefault()
+            };
+
+            return View(detailsVM);
         }
 
         public IActionResult Privacy()
