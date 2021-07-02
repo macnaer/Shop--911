@@ -35,7 +35,7 @@
                         <li>
                             @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart) != null )
                             {
-                            <a asp-action="Index" asp-controller="Cart">
+                            <a asp-action="Index" asp-controller="Cart" class="nav-link text-dark">
                                 @{
                                     var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart).Count();
                                 }
