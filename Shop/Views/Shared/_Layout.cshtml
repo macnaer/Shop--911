@@ -33,14 +33,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
                         </li>
                         <li>
-                            @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart) != null )
+                            @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart) != null)
                             {
-                            <a asp-action="Index" asp-controller="Cart" class="nav-link text-dark">
-                                @{
-                                    var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart).Count();
-                                }
-                                Cart &nbsp; (@count)
-                            </a>
+                                <a asp-action="Index" asp-controller="Cart" class="nav-link text-dark">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(ENV.SessinCart).Count();
+                                    }
+                                    Cart &nbsp; (@count)
+                                </a>
                             }
                             else
                             {
@@ -50,6 +50,10 @@
                         <li>
                             <partial name="_LoginPartial" />
                         </li>
+                        @if (User.IsInRole(Shop.ENV.AdminRole))
+                        {
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create new admin</a>
+                        }
                     </ul>
                 </div>
             </div>

@@ -9,5 +9,8 @@ namespace Shop
     {
         public const string ImagePath = @"\images\products\";
         public const string SessinCart = "ShoppingCartSession";
+
+        public static string AdminRole = "Admin";
+        public static string CustomerRole = "Customer";
     }
 }
