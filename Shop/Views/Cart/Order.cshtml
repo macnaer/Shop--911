@@ -1,0 +1,11 @@
+﻿@model Shop.Models.ViewModels.ProductUserVM
+
+@foreach (var item in Model.ProductList)
+{
+    <p>@item.Id</p>
+    <p>@item.Name</p>
+}
+
+<input asp-for="AppUser.Email" />
+<form method="post">
+</form>
