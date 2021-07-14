@@ -12,5 +12,7 @@ namespace Shop
 
         public static string AdminRole = "Admin";
         public static string CustomerRole = "Customer";
+
+        public const string EmailAdmin = "trofimchuk.an@gmail.com";
     }
 }
