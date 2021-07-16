@@ -115,7 +115,7 @@ namespace Shop.Controllers
             StringBuilder productListSB = new StringBuilder();
             foreach(var item in productUserVM.ProductList)
             {
-                productListSB.Append($" - Name: {item.Name} <span style='font-size: 14px'>(ID : {item.Id})</span>");
+                productListSB.Append($" - Name: {item.Name} <span style='font-size: 14px'>ID : {item.Id})</span>");
             }
 
             string messageBody = string.Format(

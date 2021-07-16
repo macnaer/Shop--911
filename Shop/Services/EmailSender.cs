@@ -45,7 +45,7 @@ namespace Shop.Services
       {
        "From",
        new JObject {
-        {"Email", "trofimchuk.an@gmail.com"},
+        {"Email", ENV.EmailAdmin},
         {"Name", "Online Shop"}
        }
       }, {
