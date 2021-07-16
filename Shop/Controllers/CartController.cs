@@ -49,6 +49,14 @@ namespace Shop.Controllers
             return View(productList);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Index")]
+        public IActionResult IndexPost()
+        {
+            return RedirectToAction(nameof(Order));
+        }
+
         public IActionResult Remove(int id)
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
@@ -90,11 +98,12 @@ namespace Shop.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Order")]
-        public async Task<IActionResult> OrderPostAsync(ProductUserVM productUserVM)
+        public async Task<IActionResult> OrderPost(ProductUserVM productUserVM)
         {
             var PathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
                 + "templates" + Path.DirectorySeparatorChar.ToString()
                 + "OrderConfirmation.html";
+
             var Subject = "New order";
             string HtmlBody = "";
             using (StreamReader sr = System.IO.File.OpenText(PathToTemplate))
@@ -113,6 +122,7 @@ namespace Shop.Controllers
                 HtmlBody,
                 productUserVM.AppUser.FullName,
                 productUserVM.AppUser.Email,
+                productUserVM.AppUser.PhoneNumber,
                 productListSB.ToString());
 
 
