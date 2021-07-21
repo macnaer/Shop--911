@@ -1,4 +1,5 @@
 /.vs
+/Shop/bin
 /Shop/bin/Debug/net5.0
 /Shop/obj
 /Shop/Shop.csproj.user
